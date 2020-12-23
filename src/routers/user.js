@@ -3,7 +3,7 @@ const multer = require('multer')
 const sharp = require('sharp')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
-const cors = require('cors')
+
 const {sendWelcomeEmail, sendExitEmail} = require('../emails/account')
 
 const router = new express.Router()
@@ -23,7 +23,7 @@ router.post('/users', async (req, res) => {
 })
 
 // login
-router.post('/users/login', cors(), async (req, res) => {
+router.post('/users/login',  async (req, res) => {
   try{
     const user = await User.findByCredentials(req.body.email, req.body.password)
     const token = await user.generateAuthToken()
@@ -57,7 +57,7 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 })
 
 // Read user profile
-router.get('/users/me', cors(), auth, async (req, res) => {
+router.get('/users/me', auth, async (req, res) => {
   res.send(req.user)
 })
 
