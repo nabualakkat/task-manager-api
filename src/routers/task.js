@@ -19,7 +19,7 @@ router.post('/tasks', auth, async (req, res) => {
 })
 router.get('/tasks/count', auth, async(req, res) => {
   try{
-    const tasks = await Task.estimatedDocumentCount({}, (err, count) => {
+    const tasks = await Task.countDocuments({owner: req.user._id}, (err, count) => {
       if (err) {
         throw new Error()
       }else{
