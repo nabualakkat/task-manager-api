@@ -17,6 +17,20 @@ router.post('/tasks', auth, async (req, res) => {
     res.status(500).send(e)
   }
 })
+router.get('/tasks/count', auth, async(req, res) => {
+  try{
+    const tasks = await Task.estimatedDocumentCount({}, (err, count) => {
+      if (err) {
+        throw new Error()
+      }else{
+        return count
+      }
+    })
+    res.send({"count": tasks})
+  }catch (e) {
+    res.status(500).send()
+  }
+})
 
 router.get('/tasks',auth, async (req, res) => {
   const match = {}
