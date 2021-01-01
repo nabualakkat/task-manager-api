@@ -7,8 +7,15 @@ const taskRouter = require('./routers/task')
 const app = express()
 const port = process.env.PORT
 
-app.use(cors())
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN,
+  preflightContinue: false,
+  optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions))
 app.options('*', cors())
+
 app.use(express.json())
 app.use(userRouter)
 app.use(taskRouter)
